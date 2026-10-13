@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bryan · Project Manager</title>
+  <meta name="description" content="Project manager with 12 years of delivery experience: career timeline, highlights, and an assistant you can ask about my work.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="nav">
+    <a class="brand" href="#top" id="brand"></a>
+    <nav>
+      <a href="#timeline">Timeline</a>
+      <a href="#highlights">Highlights</a>
+      <a href="#skills">Skills</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <p class="eyebrow" id="location"></p>
+      <h1 id="name"></h1>
+      <p class="headline" id="headline"></p>
+      <p class="summary" id="summary"></p>
+      <div class="hero-actions">
+        <button class="btn primary" data-open-chat>Ask about my experience</button>
+        <a class="btn" href="#contact">Get in touch</a>
+      </div>
+      <div class="stats" id="stats"></div>
+    </section>
+
+    <section id="timeline">
+      <h2>Career timeline</h2>
+      <ol class="timeline" id="timeline-list"></ol>
+    </section>
+
+    <section id="highlights">
+      <h2>Highlights</h2>
+      <div class="cards" id="highlight-cards"></div>
+    </section>
+
+    <section id="skills">
+      <h2>Skills &amp; credentials</h2>
+      <ul class="chips" id="skill-list"></ul>
+      <div class="creds">
+        <div><h3>Certifications</h3><ul id="cert-list"></ul></div>
+        <div><h3>Education</h3><ul id="edu-list"></ul></div>
+      </div>
+    </section>
+
+    <section id="contact" class="contact">
+      <h2>Let's talk</h2>
+      <p>Open to conversations about new roles and projects.</p>
+      <div class="hero-actions" id="contact-links"></div>
+    </section>
+  </main>
+
+  <footer><span id="footer-name"></span> · <span id="year"></span></footer>
+
+  <dialog class="lightbox" id="lightbox" aria-label="Photo">
+    <img id="lightbox-img" alt="">
+    <p id="lightbox-caption"></p>
+  </dialog>
+
+  <button class="chat-fab" data-open-chat aria-label="Open chat">Ask me anything</button>
+  <aside class="chat" id="chat" hidden aria-label="Chat about Bryan">
+    <div class="chat-head">
+      <strong>Ask about my career</strong>
+      <button class="chat-close" id="chat-close" aria-label="Close chat">×</button>
+    </div>
+    <div class="chat-log" id="chat-log" aria-live="polite"></div>
+    <div class="chat-suggest" id="chat-suggest">
+      <button>What projects has he led?</button>
+      <button>What's his management style?</button>
+      <button>Which certifications does he hold?</button>
+    </div>
+    <form class="chat-form" id="chat-form">
+      <input id="chat-input" maxlength="1000" placeholder="Type a question…" autocomplete="off" required>
+      <button class="btn primary" type="submit">Send</button>
+    </form>
+  </aside>
+
+  <script src="app.js" type="module"></script>
+</body>
+</html>

@@ -1,0 +1,102 @@
+{
+  "_note": "Edit this one file: the website and the chatbot both read from it. Anything in [square brackets] is treated as unknown by the chatbot.",
+  "name": "Bryan Huynh, PMP",
+  "headline": "Project Manager · Turning cross-functional chaos into delivered programs",
+  "location": "Los Angeles, CA",
+  "summary": "PMP-certified project manager and Six Sigma Black Belt with 10+ years across legal, restaurant tech, media, and consumer products. I roll out project management platforms, stand up governance, and align teams from Legal to Finance so work ships on time and costs less.",
+  "contact": {
+    "email": "BryanHuynh22@gmail.com",
+    "linkedin": "",
+    "resume": ""
+  },
+  "stats": [
+    { "value": "10+", "label": "Years leading projects and teams" },
+    { "value": "300+", "label": "Projects migrated to Wrike" },
+    { "value": "$40K+", "label": "Annual savings found at Wilshire Law Firm" },
+    { "value": "93%", "label": "Satisfaction at the 2025 Taco Bell Technology Forum" }
+  ],
+  "timeline": [
+    {
+      "id": "wilshire",
+      "start": "Feb 2026", "end": "Present",
+      "title": "Project Manager, IT", "company": "Wilshire Law Firm", "location": "Los Angeles, CA",
+      "summary": "Leads IT projects across the call center, cybersecurity, and AI solutions teams.",
+      "achievements": [
+        "Deployed the firm's first project management platform across call center, cybersecurity, and AI solutions, finding over $40K in annual savings.",
+        "Led cross-functional tech stack alignment meetings across Operations, Marketing, Accounting & Finance, Talent Acquisition, and Legal to streamline systems and improve integrations."
+      ],
+      "photos": []
+    },
+    {
+      "id": "taco-bell",
+      "start": "Aug 2024", "end": "Feb 2026",
+      "title": "Project Coordinator, Digital & Technology", "company": "Taco Bell Corp", "location": "Irvine, CA",
+      "summary": "Coordinated technology events, franchisee communications, and technology governance.",
+      "achievements": [
+        "Orchestrated the 2025 Technology Forum: 15 high-impact sessions for 100+ attendees and 4 sponsors, 93% satisfaction, and top leadership recognition as the most successful forum to date.",
+        "Led and supported quarterly franchisee updates, coordinating content across 10+ platforms with multiple product owners.",
+        "Operationalized Technology Governance with Deloitte and focus area leads, then right-sized the process to fit evolving business and franchisee needs."
+      ],
+      "photos": []
+    },
+    {
+      "id": "siriusxm",
+      "start": "Nov 2023", "end": "Jul 2024",
+      "title": "Project Manager, Strategic Operations", "company": "SiriusXM", "location": "Los Angeles, CA",
+      "summary": "Built structure and tooling for the Strategic Operations teams across Sourcing, Procurement, and FinOps.",
+      "achievements": [
+        "Created the structure, guidelines, and knowledge base for Strategic Operations, increasing use and efficiency by 50%.",
+        "Built 15+ project timelines on Monday.com for initiatives spanning Sourcing, Procurement, and FinOps.",
+        "Evaluated 10+ SaaS management tools to streamline workflows and find savings."
+      ],
+      "photos": []
+    },
+    {
+      "id": "ultra-pro-senior",
+      "start": "Sep 2020", "end": "Nov 2023",
+      "title": "Senior Project Manager, Product Development", "company": "Ultra Pro International", "location": "Commerce, CA",
+      "summary": "Led cross-functional product development across graphics, engineering, sourcing, and purchasing.",
+      "achievements": [
+        "Exceeded annual productivity goals by 30% through streamlined processes and communication across graphics, engineering, sourcing, and purchasing.",
+        "Ensured accuracy of engineering drawings for vendors and account managers, keeping QA compliance and documentation on track.",
+        "Wrote company-wide training material and ran weekly department meetings to keep stakeholders current on tools and procedures.",
+        "Produced project trend analysis reports in Wrike and Excel to flag expectations and risks early."
+      ],
+      "photos": []
+    },
+    {
+      "id": "ultra-pro",
+      "start": "Feb 2017", "end": "Sep 2020",
+      "title": "Project Manager, Product Development", "company": "Ultra Pro International", "location": "Commerce, CA",
+      "summary": "Planned and delivered product development projects and introduced the company's project management tooling.",
+      "achievements": [
+        "Led the adoption of Wrike, migrating 300+ projects seamlessly with department leads.",
+        "Built and ran project plans, schedules, and timelines, managing risk to hold scope, budget, and quality.",
+        "Turned monthly intake data into reports on project volume and industry trends to guide strategy."
+      ],
+      "photos": []
+    },
+    {
+      "id": "sls",
+      "start": "Jul 2015", "end": "Feb 2017",
+      "title": "SEO Local Search Specialist", "company": "SLS Consulting", "location": "Pasadena, CA",
+      "summary": "Ran digital marketing and local search strategy for clients.",
+      "achievements": [
+        "Drove a 30% increase in client Google search rankings and lead generation.",
+        "Analyzed website metrics and delivered recommendations for sustained ranking gains.",
+        "Developed new directory-building approaches that raised rankings while cutting costs 20%."
+      ],
+      "photos": []
+    }
+  ],
+  "highlights": [
+    { "title": "2025 Technology Forum", "metric": "93% satisfaction", "description": "Orchestrated Taco Bell's Technology Forum: 15 sessions, 100+ attendees, 4 sponsors, recognized by leadership as the most successful to date." },
+    { "title": "First PM platform at Wilshire", "metric": "$40K+ saved / year", "description": "Rolled out the firm's first project management platform across call center, cybersecurity, and AI solutions." },
+    { "title": "Wrike migration", "metric": "300+ projects", "description": "Led Ultra Pro's adoption of Wrike and moved 300+ projects over without disruption." },
+    { "title": "Product development throughput", "metric": "+30% productivity", "description": "Beat Ultra Pro's annual productivity goals by streamlining work across graphics, engineering, sourcing, and purchasing." }
+  ],
+  "skills": ["Cross-functional leadership", "Technology governance", "Process improvement", "Risk management", "Stakeholder communications", "Event & program planning", "Training & documentation", "SaaS evaluation", "Wrike", "Monday.com", "Excel", "SEO & digital marketing"],
+  "certifications": ["Project Management Professional (PMP)®", "Certified Six Sigma Black Belt (CSSBB)", "Wrike Product Mastery – Silver", "Wrike Report Mastery – Silver", "Monday Work Management Core Certified"],
+  "education": ["B.S. Business Administration, Marketing · University of California, Riverside · 2014"],
+  "chatbot_notes": "[Optional: work style, management philosophy, the kinds of roles Bryan is open to, availability, and topics he'd rather not discuss.]"
+}

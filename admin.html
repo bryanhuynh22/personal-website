@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Manage Photos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="nav">
+    <a class="brand" href="/">← Back to site</a>
+    <nav><button class="btn" id="sign-out" hidden>Sign out</button></nav>
+  </header>
+  <main>
+    <section class="hero">
+      <h1>Job photos</h1>
+      <p class="headline">Add, caption, or remove the photos shown under each job on your timeline.</p>
+
+      <form class="admin-login" id="login">
+        <label for="password">Password</label>
+        <div class="row">
+          <input type="password" id="password" autocomplete="current-password" required>
+          <button class="btn primary" type="submit">Sign in</button>
+        </div>
+        <p class="admin-msg" id="login-msg" role="status"></p>
+      </form>
+    </section>
+
+    <div id="jobs" hidden></div>
+  </main>
+  <script src="admin.js" type="module"></script>
+</body>
+</html>
