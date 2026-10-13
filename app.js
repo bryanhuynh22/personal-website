@@ -92,6 +92,10 @@ const add = (role, text, extra = "") => {
 };
 add("assistant", `Hi! I can answer questions about ${firstName}'s experience as a project manager. What would you like to know?`);
 
+// Hide every chat entry point until the chat API reports it's configured.
+const chatReady = await fetch("/api/chat").then((r) => r.json()).then((d) => d.enabled).catch(() => false);
+if (!chatReady) document.querySelectorAll("[data-open-chat]").forEach((b) => (b.hidden = true));
+
 const open = () => { chat.hidden = false; fab.hidden = true; input.focus(); };
 document.querySelectorAll("[data-open-chat]").forEach((b) => b.addEventListener("click", open));
 $("chat-close").addEventListener("click", () => { chat.hidden = true; fab.hidden = false; });

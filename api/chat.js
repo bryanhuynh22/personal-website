@@ -19,6 +19,8 @@ ${JSON.stringify(profile, null, 2)}
 </profile>`;
 
 export default async function handler(req, res) {
+  // The page asks first so it can hide the chat until ANTHROPIC_API_KEY is set.
+  if (req.method === "GET") return res.json({ enabled: Boolean(process.env.ANTHROPIC_API_KEY) });
   if (req.method !== "POST") return res.status(405).json({ error: "POST only" });
 
   const history = Array.isArray(req.body?.messages) ? req.body.messages : [];
