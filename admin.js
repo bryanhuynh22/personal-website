@@ -25,7 +25,7 @@ async function api(body) {
 
 // Shrink big phone photos so uploads stay fast and under the 4.5 MB request limit.
 // With square=true the photo is center-cropped to a square (for the headshot).
-async function toDataUrl(file, { max = 2000, square = false } = {}) {
+async function toDataUrl(file, { max = 2000, square = false, png = false } = {}) {
   let bitmap;
   try { bitmap = await createImageBitmap(file); }
   catch { throw new Error(`${file.name}: this browser can't read that format. Please use JPG or PNG.`); }
@@ -40,6 +40,7 @@ async function toDataUrl(file, { max = 2000, square = false } = {}) {
   canvas.width = Math.round(sw * scale);
   canvas.height = Math.round(sh * scale);
   canvas.getContext("2d").drawImage(bitmap, sx, sy, sw, sh, 0, 0, canvas.width, canvas.height);
+  if (png) return canvas.toDataURL("image/png"); // keeps logo transparency
   for (const q of [0.85, 0.7, 0.5]) {
     const url = canvas.toDataURL("image/jpeg", q);
     if (url.length < 4_000_000) return url;
@@ -55,9 +56,15 @@ async function render() {
   renderHeadshot(uploaded.headshot?.url);
   const root = $("job-list");
   root.replaceChildren();
+  const logoDone = new Set();
   for (const job of profile.timeline) {
     const sec = el("section", "admin-job");
     sec.append(el("h2", null, `${job.title} · ${job.company}`), el("p", "when", `${job.start} – ${job.end}`));
+    const company = slug(job.company);
+    if (!logoDone.has(company)) {
+      logoDone.add(company);
+      sec.append(logoControl(job, company, uploaded.logos?.[company]?.url));
+    }
 
     const grid = el("div", "admin-grid");
     for (const ph of uploaded.jobs?.[job.id] || []) {
@@ -100,6 +107,34 @@ async function render() {
     sec.append(grid, form);
     root.append(sec);
   }
+}
+
+const slug = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+
+// Upload a logo to replace the automatic one for a company (shared by all its jobs).
+function logoControl(job, company, url) {
+  const box = el("div", "admin-logo");
+  const tile = el("div", "logo logo-lg");
+  if (url) { const img = el("img"); img.src = url; img.alt = ""; tile.append(img); }
+  else { tile.textContent = "Auto"; tile.classList.add("logo-initials"); }
+  const form = el("form", "row");
+  const file = el("input"); file.type = "file"; file.accept = "image/*"; file.required = true;
+  const go = el("button", "btn", url ? "Replace logo" : "Upload logo");
+  form.append(file, go);
+  const msg = el("p", "admin-msg");
+  form.onsubmit = (e) => {
+    e.preventDefault();
+    run(msg, "Logo updated.", async () => api({ action: "logo", company, data: await toDataUrl(file.files[0], { max: 400, png: true }) }), true);
+  };
+  const side = el("div");
+  side.append(el("strong", null, `${job.company} logo`), form, msg);
+  if (url) {
+    const rm = el("button", "btn danger", "Use automatic logo");
+    rm.onclick = () => run(msg, "", () => api({ action: "remove-logo", company }), true);
+    side.append(rm);
+  }
+  box.append(tile, side);
+  return box;
 }
 
 function renderHeadshot(url) {

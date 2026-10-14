@@ -7,6 +7,7 @@
 //   { action: "remove", url }
 //   { action: "headshot", data }   (data = base64 image; replaces any previous headshot)
 //   { action: "remove-headshot" }
+//   { action: "logo", company, data }  /  { action: "remove-logo", company }   (company logo override)
 // The photo list is a small JSON manifest; each change writes a new file under
 // manifest/ (so no stale CDN copy is ever read) and prunes older ones.
 import { createHash, timingSafeEqual } from "node:crypto";
@@ -14,6 +15,8 @@ import { put, list, del } from "@vercel/blob";
 import profile from "../profile.json" with { type: "json" };
 
 const JOB_IDS = new Set(profile.timeline.map((j) => j.id));
+const slug = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+const COMPANIES = new Set(profile.timeline.map((j) => slug(j.company)));
 const TYPES = { "image/jpeg": "jpg", "image/png": "png", "image/webp": "webp" };
 const KEEP_MANIFESTS = 5;
 
@@ -89,6 +92,25 @@ export default async function handler(req, res) {
       await writeManifest(manifest, blobs);
       if (previous) await del(previous);
       return res.json({ ok: true, headshot: manifest.headshot || null });
+    }
+
+    if (body.action === "logo" || body.action === "remove-logo") {
+      if (!COMPANIES.has(body.company)) return res.status(400).json({ error: "Unknown company." });
+      manifest.logos ||= {};
+      const previous = manifest.logos[body.company]?.url;
+      if (body.action === "logo") {
+        const [, type, data] = /^data:([\w/+.-]+);base64,(.+)$/.exec(body.data || "") || [];
+        if (!TYPES[type]) return res.status(400).json({ error: "Use a JPG, PNG or WebP image." });
+        const blob = await put(`logos/${body.company}.${TYPES[type]}`, Buffer.from(data, "base64"), {
+          access: "public", contentType: type, addRandomSuffix: true,
+        });
+        manifest.logos[body.company] = { url: blob.url };
+      } else {
+        delete manifest.logos[body.company];
+      }
+      await writeManifest(manifest, blobs);
+      if (previous) await del(previous);
+      return res.json({ ok: true });
     }
 
     const photo = all.find((p) => p.url === body.url);

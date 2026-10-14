@@ -123,3 +123,19 @@ footer { padding: 32px 20px; color: var(--muted); font-size: 14px; text-align: c
 .chat-title small { display: block; color: var(--muted); font-size: 12px; }
 .headshot-row { display: flex; gap: 24px; align-items: center; flex-wrap: wrap; margin-bottom: 8px; }
 .headshot-row .admin-upload { flex: 1; min-width: 240px; }
+
+/* Company logos */
+.logo { flex: none; width: 52px; height: 52px; border-radius: 12px; background: #fff; border: 1px solid var(--line);
+  display: grid; place-items: center; overflow: hidden; padding: 8px; }
+.logo img { width: 100%; height: 100%; object-fit: contain; display: block; }
+.logo-initials { background: var(--accent-soft); color: var(--accent); font-weight: 700; font-size: 16px; padding: 0; }
+.logo-lg { width: 64px; height: 64px; }
+.logo-lg.logo-initials { font-size: 20px; }
+.job-head { display: flex; gap: 14px; align-items: center; margin-bottom: 10px; }
+.job-head h3 { margin: 2px 0; }
+.companies { margin-top: 36px; }
+.companies-label { color: var(--muted); font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; margin: 0 0 14px; }
+.company-strip { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 16px; }
+.company-item { display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center; font-size: 14px; font-weight: 500; color: var(--muted); }
+.admin-logo { display: flex; gap: 16px; align-items: center; margin: 0 0 16px; flex-wrap: wrap; }
+.admin-logo .row { margin-top: 6px; }

@@ -14,6 +14,10 @@ Everything lives in **profile.json**. The page and the chatbot both read it, so 
 Go to **/admin.html** on your site and sign in with your admin password. There you can upload your headshot
 (shown next to your name, in the contact section and in the chat window; your initials show until you add one)
 and upload photos under any job.
+
+Company logos appear on the timeline and in the "Where I've worked" row. By default each one uses the icon
+from the company's `website` in profile.json (or a `logo` image path if set). To use a better logo, upload one
+under that company on /admin.html; PNGs with transparent backgrounds look best.
 You can add a caption, edit it later, or delete a photo. Big phone photos are resized automatically.
 Photos are stored in Vercel Blob, not in this folder.
 

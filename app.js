@@ -29,6 +29,28 @@ for (const slot of document.querySelectorAll("[data-avatar]")) {
   }
 }
 
+// Company logos: uploaded from admin.html > "logo" in profile.json > the company website's icon > initials.
+const slug = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+function logoTile(job, cls = "logo") {
+  const tile = el("div", cls);
+  const fallback = () => {
+    tile.replaceChildren(job.company.split(/\s+/).map((w) => w[0]).join("").slice(0, 2).toUpperCase());
+    tile.classList.add("logo-initials");
+  };
+  const src = uploaded.logos?.[slug(job.company)]?.url || job.logo ||
+    (job.website && `https://www.google.com/s2/favicons?domain=${job.website}&sz=128`);
+  if (!src) { fallback(); return tile; }
+  const img = el("img");
+  img.alt = `${job.company} logo`;
+  img.loading = "lazy";
+  // Tiny or missing icons look worse than initials, so fall back for those.
+  img.onload = () => { if (!src.endsWith(".svg") && img.naturalWidth < 32) fallback(); };
+  img.onerror = fallback;
+  img.src = src;
+  tile.append(img);
+  return tile;
+}
+
 $("brand").textContent = profile.name;
 $("name").textContent = profile.name;
 $("headline").textContent = profile.headline;
@@ -44,10 +66,23 @@ for (const s of profile.stats) {
   $("stats").append(d);
 }
 
+const seen = new Set();
+for (const job of profile.timeline) {
+  if (seen.has(job.company)) continue;
+  seen.add(job.company);
+  const item = el("li", "company-item");
+  item.append(logoTile(job, "logo logo-lg"), el("span", null, job.company));
+  $("company-strip").append(item);
+}
+
 for (const job of profile.timeline) {
   const li = el("li");
-  li.append(el("div", "when", `${job.start} – ${job.end}`), el("h3", null, job.title),
-    el("div", "company", [job.company, job.location].filter(Boolean).join(" · ")), el("p", null, job.summary));
+  const head = el("div", "job-head");
+  const text = el("div");
+  text.append(el("div", "when", `${job.start} – ${job.end}`), el("h3", null, job.title),
+    el("div", "company", [job.company, job.location].filter(Boolean).join(" · ")));
+  head.append(logoTile(job), text);
+  li.append(head, el("p", null, job.summary));
   const ul = el("ul");
   for (const a of job.achievements) ul.append(el("li", null, a));
   li.append(ul);
