@@ -139,3 +139,5 @@ footer { padding: 32px 20px; color: var(--muted); font-size: 14px; text-align: c
 .company-item { display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center; font-size: 14px; font-weight: 500; color: var(--muted); }
 .admin-logo { display: flex; gap: 16px; align-items: center; margin: 0 0 16px; flex-wrap: wrap; }
 .admin-logo .row { margin-top: 6px; }
+.logo-fill { padding: 0; }
+.logo-fill img { object-fit: cover; }

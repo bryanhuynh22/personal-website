@@ -117,6 +117,8 @@
       "company": "SLS Consulting",
       "location": "Pasadena, CA",
       "website": "legalinternetmarketing.com",
+      "logo": "images/logos/sls-consulting.png",
+      "logoFill": true,
       "summary": "Ran digital marketing and local search strategy for clients.",
       "achievements": [
         "Drove a 30% increase in client Google search rankings and lead generation.",

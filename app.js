@@ -40,6 +40,7 @@ function logoTile(job, cls = "logo") {
   const src = uploaded.logos?.[slug(job.company)]?.url || job.logo ||
     (job.website && `https://www.google.com/s2/favicons?domain=${job.website}&sz=128`);
   if (!src) { fallback(); return tile; }
+  if (job.logoFill && !uploaded.logos?.[slug(job.company)]) tile.classList.add("logo-fill"); // logo has its own background
   const img = el("img");
   img.alt = `${job.company} logo`;
   img.loading = "lazy";
