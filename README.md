@@ -10,8 +10,10 @@ Everything lives in **profile.json**. The page and the chatbot both read it, so 
 - Anything in `[square brackets]` is a placeholder. The chatbot treats those as unknown and won't make up an answer.
 - `chatbot_notes` holds extra facts only the chatbot uses (work style, what roles you're open to, topics to avoid).
 
-## Adding job photos
-Go to **/admin.html** on your site, sign in with your admin password, and upload photos under any job.
+## Headshot and job photos
+Go to **/admin.html** on your site and sign in with your admin password. There you can upload your headshot
+(shown next to your name, in the contact section and in the chat window; your initials show until you add one)
+and upload photos under any job.
 You can add a caption, edit it later, or delete a photo. Big phone photos are resized automatically.
 Photos are stored in Vercel Blob, not in this folder.
 

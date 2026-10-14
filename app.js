@@ -14,6 +14,21 @@ const [profile, uploaded] = await Promise.all([
 ]);
 const firstName = profile.name.split(" ")[0];
 
+// Headshot: uploaded from admin.html, or a "headshot" path in profile.json; initials until then.
+const headshot = uploaded.headshot?.url || profile.headshot;
+const initials = profile.name.split(",")[0].split(/\s+/).map((w) => w[0]).join("").slice(0, 2);
+for (const slot of document.querySelectorAll("[data-avatar]")) {
+  if (headshot) {
+    const img = el("img");
+    img.src = headshot;
+    img.alt = `Photo of ${profile.name.split(",")[0]}`;
+    slot.append(img);
+  } else {
+    slot.textContent = initials;
+    slot.setAttribute("aria-hidden", "true");
+  }
+}
+
 $("brand").textContent = profile.name;
 $("name").textContent = profile.name;
 $("headline").textContent = profile.headline;
@@ -90,6 +105,7 @@ const add = (role, text, extra = "") => {
   log.scrollTop = log.scrollHeight;
   return m;
 };
+$("chat-name").textContent = `Ask about ${firstName}'s career`;
 add("assistant", `Hi! I can answer questions about ${firstName}'s experience as a project manager. What would you like to know?`);
 
 // Hide every chat entry point until the chat API reports it's configured.

@@ -5,6 +5,8 @@
 //   { action: "upload", jobId, caption, filename, data }   (data = base64 JPEG/PNG/WebP)
 //   { action: "caption", url, caption }
 //   { action: "remove", url }
+//   { action: "headshot", data }   (data = base64 image; replaces any previous headshot)
+//   { action: "remove-headshot" }
 // The photo list is a small JSON manifest; each change writes a new file under
 // manifest/ (so no stale CDN copy is ever read) and prunes older ones.
 import { createHash, timingSafeEqual } from "node:crypto";
@@ -70,6 +72,23 @@ export default async function handler(req, res) {
       (manifest.jobs[body.jobId] ||= []).push(photo);
       await writeManifest(manifest, blobs);
       return res.json({ ok: true, photo });
+    }
+
+    if (body.action === "headshot" || body.action === "remove-headshot") {
+      const previous = manifest.headshot?.url;
+      if (body.action === "headshot") {
+        const [, type, data] = /^data:([\w/+.-]+);base64,(.+)$/.exec(body.data || "") || [];
+        if (!TYPES[type]) return res.status(400).json({ error: "Use a JPG, PNG or WebP image." });
+        const blob = await put(`headshot/headshot.${TYPES[type]}`, Buffer.from(data, "base64"), {
+          access: "public", contentType: type, addRandomSuffix: true,
+        });
+        manifest.headshot = { url: blob.url };
+      } else {
+        delete manifest.headshot;
+      }
+      await writeManifest(manifest, blobs);
+      if (previous) await del(previous);
+      return res.json({ ok: true, headshot: manifest.headshot || null });
     }
 
     const photo = all.find((p) => p.url === body.url);

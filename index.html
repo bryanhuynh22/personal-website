@@ -22,9 +22,14 @@
 
   <main id="top">
     <section class="hero">
-      <p class="eyebrow" id="location"></p>
-      <h1 id="name"></h1>
-      <p class="headline" id="headline"></p>
+      <div class="hero-top">
+        <div class="avatar avatar-lg" data-avatar></div>
+        <div>
+          <p class="eyebrow" id="location"></p>
+          <h1 id="name"></h1>
+          <p class="headline" id="headline"></p>
+        </div>
+      </div>
       <p class="summary" id="summary"></p>
       <div class="hero-actions">
         <button class="btn primary" data-open-chat>Ask about my experience</button>
@@ -53,6 +58,7 @@
     </section>
 
     <section id="contact" class="contact">
+      <div class="avatar avatar-md" data-avatar></div>
       <h2>Let's talk</h2>
       <p>Open to conversations about new roles and projects.</p>
       <div class="hero-actions" id="contact-links"></div>
@@ -69,7 +75,10 @@
   <button class="chat-fab" data-open-chat aria-label="Open chat">Ask me anything</button>
   <aside class="chat" id="chat" hidden aria-label="Chat about Bryan">
     <div class="chat-head">
-      <strong>Ask about my career</strong>
+      <div class="chat-title">
+        <div class="avatar avatar-sm" data-avatar></div>
+        <div><strong id="chat-name">Ask about my career</strong><small>Answers come from my resume</small></div>
+      </div>
       <button class="chat-close" id="chat-close" aria-label="Close chat">×</button>
     </div>
     <div class="chat-log" id="chat-log" aria-live="polite"></div>

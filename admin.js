@@ -1,4 +1,4 @@
-// Photo manager: sign in with ADMIN_PASSWORD, then upload/caption/remove photos per job.
+// Photo manager: sign in with ADMIN_PASSWORD, then set the headshot and upload/caption/remove photos per job.
 const $ = (id) => document.getElementById(id);
 const el = (tag, cls, text) => {
   const n = document.createElement(tag);
@@ -24,15 +24,22 @@ async function api(body) {
 }
 
 // Shrink big phone photos so uploads stay fast and under the 4.5 MB request limit.
-async function toDataUrl(file) {
+// With square=true the photo is center-cropped to a square (for the headshot).
+async function toDataUrl(file, { max = 2000, square = false } = {}) {
   let bitmap;
   try { bitmap = await createImageBitmap(file); }
   catch { throw new Error(`${file.name}: this browser can't read that format. Please use JPG or PNG.`); }
-  const scale = Math.min(1, 2000 / Math.max(bitmap.width, bitmap.height));
+  let sx = 0, sy = 0, sw = bitmap.width, sh = bitmap.height;
+  if (square) {
+    sw = sh = Math.min(bitmap.width, bitmap.height);
+    sx = (bitmap.width - sw) / 2;
+    sy = Math.max(0, (bitmap.height - sh) / 2 - sh * 0.1); // keep a bit more headroom
+  }
+  const scale = Math.min(1, max / Math.max(sw, sh));
   const canvas = document.createElement("canvas");
-  canvas.width = Math.round(bitmap.width * scale);
-  canvas.height = Math.round(bitmap.height * scale);
-  canvas.getContext("2d").drawImage(bitmap, 0, 0, canvas.width, canvas.height);
+  canvas.width = Math.round(sw * scale);
+  canvas.height = Math.round(sh * scale);
+  canvas.getContext("2d").drawImage(bitmap, sx, sy, sw, sh, 0, 0, canvas.width, canvas.height);
   for (const q of [0.85, 0.7, 0.5]) {
     const url = canvas.toDataURL("image/jpeg", q);
     if (url.length < 4_000_000) return url;
@@ -45,7 +52,8 @@ async function render() {
     fetch("profile.json").then((r) => r.json()),
     fetch("/api/photos", { cache: "no-store" }).then((r) => r.json()),
   ]);
-  const root = $("jobs");
+  renderHeadshot(uploaded.headshot?.url);
+  const root = $("job-list");
   root.replaceChildren();
   for (const job of profile.timeline) {
     const sec = el("section", "admin-job");
@@ -94,6 +102,31 @@ async function render() {
   }
 }
 
+function renderHeadshot(url) {
+  const preview = $("headshot-preview");
+  preview.replaceChildren();
+  if (url) {
+    const img = el("img"); img.src = url; img.alt = "Your headshot";
+    preview.append(img);
+  } else {
+    preview.textContent = "No photo";
+    preview.style.fontSize = "16px";
+  }
+  $("headshot-remove").hidden = !url;
+}
+
+$("headshot-form").onsubmit = async (e) => {
+  e.preventDefault();
+  const file = $("headshot-file").files[0];
+  if (!file) return;
+  await run($("headshot-msg"), "Headshot updated.", async () => {
+    await api({ action: "headshot", data: await toDataUrl(file, { max: 800, square: true }) });
+    $("headshot-file").value = "";
+  }, true);
+};
+$("headshot-remove").onclick = () => confirm("Remove your headshot from the site?") &&
+  run($("headshot-msg"), "Headshot removed.", () => api({ action: "remove-headshot" }), true);
+
 async function run(msg, done, fn, rerender) {
   msg.textContent = "Working…";
   try { await fn(); msg.textContent = done; if (rerender) await render(); }
@@ -113,7 +146,7 @@ async function signIn() {
   $("sign-out").hidden = false;
   $("jobs").hidden = false;
   try { await render(); }
-  catch { $("jobs").replaceChildren(el("p", "admin-msg", "Couldn't load your photos. Try reloading.")); }
+  catch { $("job-list").replaceChildren(el("p", "admin-msg", "Couldn't load your photos. Try reloading.")); }
 }
 
 $("login").onsubmit = (e) => {

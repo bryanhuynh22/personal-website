@@ -16,8 +16,8 @@
   </header>
   <main>
     <section class="hero">
-      <h1>Job photos</h1>
-      <p class="headline">Add, caption, or remove the photos shown under each job on your timeline.</p>
+      <h1>Photos</h1>
+      <p class="headline">Set your headshot, and add, caption, or remove the photos shown under each job.</p>
 
       <form class="admin-login" id="login">
         <label for="password">Password</label>
@@ -29,7 +29,24 @@
       </form>
     </section>
 
-    <div id="jobs" hidden></div>
+    <div id="jobs" hidden>
+      <section class="admin-job" id="headshot-section">
+        <h2>Your headshot</h2>
+        <p class="when">Shown next to your name, in the contact section, and in the chat window. Square photos work best.</p>
+        <div class="headshot-row">
+          <div class="avatar avatar-lg" id="headshot-preview"></div>
+          <form class="admin-upload" id="headshot-form">
+            <input type="file" id="headshot-file" accept="image/*" required>
+            <div class="row">
+              <button class="btn primary" type="submit">Upload headshot</button>
+              <button class="btn danger" type="button" id="headshot-remove" hidden>Remove</button>
+            </div>
+            <p class="admin-msg" id="headshot-msg" role="status"></p>
+          </form>
+        </div>
+      </section>
+      <div id="job-list"></div>
+    </div>
   </main>
   <script src="admin.js" type="module"></script>
 </body>
